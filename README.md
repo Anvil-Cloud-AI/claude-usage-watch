@@ -16,11 +16,44 @@ go run . -test-notify   # check that notifications show up
 make test
 
 make install            # build to ~/.local/bin and start a launchd agent at login
-make install THRESHOLD=85 INTERVAL=10m
 make status
 make logs
 make uninstall
 ```
+
+## Changing the threshold
+
+The alert threshold defaults to **90%**. It can be any value above 0 and up to 100. One threshold applies to every limit window.
+
+**Background service:** run `make install` again with the new value. This rebuilds the binary and replaces the running agent, so nothing needs to be uninstalled first:
+
+```sh
+make install THRESHOLD=80               # alert at 80%
+make install THRESHOLD=75 INTERVAL=2m   # alert at 75%, check every 2 minutes
+```
+
+Running plain `make install` resets both settings to their defaults (90% and 5m).
+
+To see what the installed agent is using:
+
+```sh
+grep -A1 -E 'threshold|interval' ~/Library/LaunchAgents/com.anvilcloud.claude-usage-watch.plist
+```
+
+**Running it directly:** pass the flags yourself:
+
+```sh
+go run . -threshold 80 -interval 2m
+```
+
+| Flag | Make variable | Default | Notes |
+|---|---|---|---|
+| `-threshold` | `THRESHOLD` | `90` | Percent; must be above 0 and at most 100 |
+| `-interval` | `INTERVAL` | `5m` | Go duration (`90s`, `2m`, `1h`); minimum `1m` |
+
+Each window alerts once per reset period. If you lower the threshold partway through a period in which you were already alerted, that window won't alert again until it resets.
+
+## Keychain access and state
 
 The first time it runs, macOS may ask whether `claude-usage-watch` can access the Keychain item. Choose **Always Allow**. Alert state is stored in `~/Library/Caches/claude-usage-watch/state.json`.
 
