@@ -27,3 +27,13 @@ The first time it runs, macOS may ask whether `claude-usage-watch` can access th
 ## Notifications
 
 Notifications are sent with `osascript`, so they appear under **Script Editor** in System Settings → Notifications. If you don't see them, make sure notifications are enabled there.
+
+## Requirements
+
+macOS and Go 1.22 or newer. Build with a current, patched Go release: this tool makes HTTPS requests, so it relies on the standard library's TLS fixes.
+
+## License
+
+[MIT](LICENSE). Free to use, modify and redistribute.
+
+Not affiliated with or endorsed by Anthropic.

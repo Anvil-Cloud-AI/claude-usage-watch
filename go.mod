@@ -1,3 +1,3 @@
 module github.com/Anvil-Cloud-AI/claude-usage-watch
 
-go 1.26.6
+go 1.22
