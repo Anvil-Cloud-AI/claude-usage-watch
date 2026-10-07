@@ -10,7 +10,8 @@ import (
 func notify(title, message string) error {
 	script := fmt.Sprintf("display notification %s with title %s sound name \"Glass\"",
 		appleScriptString(message), appleScriptString(title))
-	if out, err := exec.Command("osascript", "-e", script).CombinedOutput(); err != nil {
+	// Fixed binary, args passed as argv (no shell); user text is escaped by appleScriptString.
+	if out, err := exec.Command("osascript", "-e", script).CombinedOutput(); err != nil { // #nosec G204
 		return fmt.Errorf("osascript: %w: %s", err, strings.TrimSpace(string(out)))
 	}
 	return nil

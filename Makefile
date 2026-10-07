@@ -1,6 +1,6 @@
 BIN_DIR   ?= $(HOME)/.local/bin
 BIN       := $(BIN_DIR)/claude-usage-watch
-LABEL     := com.boltface.claude-usage-watch
+LABEL     := com.anvilcloud.claude-usage-watch
 PLIST     := $(HOME)/Library/LaunchAgents/$(LABEL).plist
 LOG       := $(HOME)/Library/Logs/claude-usage-watch.log
 THRESHOLD ?= 90

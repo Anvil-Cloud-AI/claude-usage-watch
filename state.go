@@ -40,7 +40,7 @@ func statePath() (string, error) {
 }
 
 func loadState(path string) (alertState, error) {
-	b, err := os.ReadFile(path)
+	b, err := os.ReadFile(path) // #nosec G304 -- path comes from statePath(), not user input
 	if errors.Is(err, fs.ErrNotExist) {
 		return alertState{}, nil
 	}

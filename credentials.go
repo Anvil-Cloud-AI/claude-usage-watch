@@ -66,5 +66,5 @@ func readCredentialsFile() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	return os.ReadFile(filepath.Join(home, ".claude", ".credentials.json"))
+	return os.ReadFile(filepath.Join(home, ".claude", ".credentials.json")) // #nosec G304 -- fixed path under $HOME
 }
